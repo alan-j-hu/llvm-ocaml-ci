@@ -10,7 +10,7 @@ build: [
 depends: [
   "conf-bash" {build}
 ]
-version: 18
+version: "18"
 depexts: [
   ["llvm@18" "zstd"] {os-distribution = "homebrew" & os = "macos"}
   ["llvm-18"] {os-distribution = "macports" & os = "macos"}
