@@ -26,7 +26,7 @@ synopsis: "Virtual package relying on llvm shared library installation"
 flags: conf
 extra-source "configure.sh" {
   src:
-    "./configure.sh"
+    "conf-llvm/configure.sh"
   checksum: [
     "sha256=13b22f406b6aa4be03cf5c70a55a8513bdb9bd804877a99c66d79cf0d6b2fbd2"
     "md5=a64daab3f3768dd671fcd046bd2c1a04"
