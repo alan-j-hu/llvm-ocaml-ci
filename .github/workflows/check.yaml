@@ -29,3 +29,4 @@ jobs:
       - run: opam repo add local ./
       - run: opam update
       - run: opam install conf-llvm-${{ matrix.link_mode }}
+      - run: opam install llvm.18-${{ matrix.link_mode }}
