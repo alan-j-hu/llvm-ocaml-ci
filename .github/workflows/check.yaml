@@ -26,5 +26,5 @@ jobs:
         uses: ocaml/setup-ocaml@v3
         with:
           ocaml-compiler: 5
-      - run: opam repo add ./
+      - run: opam repo add local ./
       - run: opam install conf-llvm-${{ matrix.link_mode }}.opam
