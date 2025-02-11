@@ -1,21 +1,16 @@
+diff --git a/llvm/cmake/modules/AddOCaml.cmake b/llvm/cmake/modules/AddOCaml.cmake
+index 2d9116b08a52..3a650bf53d48 100644
 --- a/llvm/cmake/modules/AddOCaml.cmake
 +++ b/llvm/cmake/modules/AddOCaml.cmake
-@@ -38,12 +38,27 @@ function(add_ocaml_library name)
+@@ -38,12 +38,20 @@ function(add_ocaml_library name)
    set(ocaml_inputs)
  
    set(ocaml_outputs "${bin}/${name}.cma")
 +
-+  # The -custom flag causes bytecode executables to fail upon creating the
-+  # runtime when installing the bindings for an out-of-tree build.
-+  #
-+  # However, the -custom flag is necessary when running the in-tree
-+  # test suite, otherwise multiple libraries will link to the same libLLVM and
-+  # runtime errors of the form
-+  # "CommandLine Error: Option *opt* registered more than once!" will occur.
-+  if (NOT LLVM_OCAML_OUT_OF_TREE AND NOT BUILD_SHARED_LIBS)
-+    set(ocaml_custom TRUE)
-+  else()
++  if ( LLVM_OCAML_OUT_OF_TREE OR BUILD_SHARED_LIBS )
 +    set(ocaml_custom FALSE)
++  else()
++    set(ocaml_custom TRUE)
 +  endif()
 +
    if( ARG_C )
@@ -24,33 +19,37 @@
 -         "${bin}/lib${name}${CMAKE_STATIC_LIBRARY_SUFFIX}")
 -    if ( BUILD_SHARED_LIBS )
 +         "${bin}/lib${name}.a")
-+    if ( NOT ocaml_custom )
++    if( NOT ocaml_custom )
        list(APPEND ocaml_outputs
 -           "${bin}/dll${name}${CMAKE_SHARED_LIBRARY_SUFFIX}")
 +           "${bin}/dll${name}.so")
      endif()
    endif()
    if( HAVE_OCAMLOPT )
-@@ -52,7 +67,12 @@ function(add_ocaml_library name)
+@@ -52,39 +60,50 @@ function(add_ocaml_library name)
           "${bin}/${name}${CMAKE_STATIC_LIBRARY_SUFFIX}")
    endif()
  
 -  set(ocaml_flags "-lstdc++" "-ldopt" "-L${LLVM_LIBRARY_DIR}"
+-                  "-ccopt" "-L\\$CAMLORIGIN/../.."
+-                  "-ccopt" "-Wl,-rpath,\\$CAMLORIGIN/../.."
+-                  ${ocaml_pkgs})
 +  if ( LLVM_OCAML_OUT_OF_TREE )
-+    set(ocaml_llvm_libdir "-L${LLVM_OCAML_EXTERNAL_LLVM_LIBDIR}")
++    set(ocaml_flags ${ocaml_pkgs})
 +  else()
-+    set(ocaml_llvm_libdir "-L${LLVM_LIBRARY_DIR}")
++    set(ocaml_flags "-ldopt" "-L${LLVM_LIBRARY_DIR}"
++                    "-ccopt" "-L\\$CAMLORIGIN/../.."
++                    "-ccopt" "-Wl,-rpath,\\$CAMLORIGIN/../.."
++                    ${ocaml_pkgs})
 +  endif()
-+  set(ocaml_flags "-lstdc++" "${ocaml_llvm_libdir}"
-                   "-ccopt" "-L\\$CAMLORIGIN/../.."
-                   "-ccopt" "-Wl,-rpath,\\$CAMLORIGIN/../.."
-                   ${ocaml_pkgs})
-@@ -62,12 +82,12 @@ function(add_ocaml_library name)
+ 
+   foreach( ocaml_dep ${ARG_OCAMLDEP} )
+     get_target_property(dep_ocaml_flags "ocaml_${ocaml_dep}" OCAML_FLAGS)
      list(APPEND ocaml_flags ${dep_ocaml_flags})
    endforeach()
  
 -  if( NOT BUILD_SHARED_LIBS )
-+  if(ocaml_custom)
++  if( ocaml_custom )
      list(APPEND ocaml_flags "-custom")
    endif()
  
@@ -58,9 +57,44 @@
 -    list(APPEND ocaml_flags "-lLLVM")
 +    list(APPEND ocaml_flags "-lLLVM-${LLVM_VERSION_MAJOR}")
    else()
++    if( LLVM_OCAML_OUT_OF_TREE )
++      list(APPEND ocaml_flags "-L${LLVM_OCAML_EXTERNAL_LLVM_LIBDIR}")
++    endif()
++
      explicit_map_components_to_libraries(llvm_libs ${ARG_LLVM})
      foreach( llvm_lib ${llvm_libs} )
-@@ -201,9 +221,9 @@ function(add_ocaml_library name)
++      # Don't use -cclib here, so ocamlmklib won't include these in the
++      # dylib files
+       list(APPEND ocaml_flags "-l${llvm_lib}" )
+     endforeach()
+-
+-    get_property(system_libs TARGET LLVMSupport PROPERTY LLVM_SYSTEM_LIBS)
+-    foreach(system_lib ${system_libs})
+-      if (system_lib MATCHES "^-")
+-        # If it's an option, pass it without changes.
+-        list(APPEND ocaml_flags "${system_lib}" )
+-      else()
+-        # Otherwise assume it's a library name we need to link with.
+-        list(APPEND ocaml_flags "-l${system_lib}" )
+-      endif()
+-    endforeach()
+   endif()
++  get_property(system_libs TARGET LLVMSupport PROPERTY LLVM_SYSTEM_LIBS)
++  foreach(system_lib ${system_libs})
++    if (system_lib MATCHES "^-")
++      # If it's an option, pass it without changes.
++      list(APPEND ocaml_flags "${system_lib}" )
++    else()
++      # Otherwise assume it's a library name we need to link with.
++      list(APPEND ocaml_flags "-l${system_lib}" )
++    endif()
++  endforeach()
++  # Pass -lstdc++ at the end because link order matters
++  list(APPEND ocaml_flags "-lstdc++")
+ 
+   string(REPLACE ";" " " ARG_CFLAGS "${ARG_CFLAGS}")
+   set(c_flags "${ARG_CFLAGS} ${LLVM_DEFINITIONS}")
+@@ -201,9 +220,9 @@ function(add_ocaml_library name)
      if( NOT (ext STREQUAL ".cmo" OR
               ext STREQUAL ".ml" OR
               ext STREQUAL CMAKE_C_OUTPUT_EXTENSION OR

@@ -38,15 +38,14 @@ extra-source "install.sh" {
   src:
     "llvm/install.sh"
   checksum: [
-    "sha256=91311c9a90258e6819adda4132f9f64df18f1f0b9df905e7f88be325ed18dce7"
-    "md5=70201a5ad01e104f7572e1fa0d498eaa"
+    "sha256=27bb787d5c0ed7ee6057d5867921d623adff4edb51a0bb579fdc08e3877e4c67"
+    "md5=55a61bc9bb1dcaa53aecfa4cba9429b3"
   ]
 }
 extra-source "AddOCaml.cmake.patch" {
   src:
-    "https://github.com/alan-j-hu/opam-source-archives/raw/e5d49c1c15149d3a239d237634f5fc85d903718d/patches/llvm/AddOCaml.cmake.patch.18"
+    "llvm/AddOCaml.cmake.patch"
   checksum: [
-    "sha256=a4fac2d6ebfaa707906dc576b99f80efe42ee8857647eb881a07f8fb5ebcddd2"
-    "md5=5a6c39055106cfc700eef2ad0255cba6"
+    "md5=76b25bdaffa2f5596cdab2dd1ff4d3bc"
   ]
 }
