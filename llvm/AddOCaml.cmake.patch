@@ -1,13 +1,16 @@
 diff --git a/llvm/cmake/modules/AddOCaml.cmake b/llvm/cmake/modules/AddOCaml.cmake
-index 2d9116b08a52..3a650bf53d48 100644
+index 2d9116b08a52..4a9767aabb3c 100644
 --- a/llvm/cmake/modules/AddOCaml.cmake
 +++ b/llvm/cmake/modules/AddOCaml.cmake
-@@ -38,12 +38,20 @@ function(add_ocaml_library name)
+@@ -38,12 +38,23 @@ function(add_ocaml_library name)
    set(ocaml_inputs)
  
    set(ocaml_outputs "${bin}/${name}.cma")
 +
-+  if ( LLVM_OCAML_OUT_OF_TREE OR BUILD_SHARED_LIBS )
++  # OCaml custom runtime is necessary when compiling to bytecode and linking
++  # to the LLVM static libs. Otherwise, errors of the form
++  # `CommandLine Error: Option ... registered more than once!` will occur.
++  if ( LLVM_LINK_LLVM_DYLIB OR BUILD_SHARED_LIBS )
 +    set(ocaml_custom FALSE)
 +  else()
 +    set(ocaml_custom TRUE)
@@ -26,7 +29,7 @@ index 2d9116b08a52..3a650bf53d48 100644
      endif()
    endif()
    if( HAVE_OCAMLOPT )
-@@ -52,39 +60,50 @@ function(add_ocaml_library name)
+@@ -52,39 +63,52 @@ function(add_ocaml_library name)
           "${bin}/${name}${CMAKE_STATIC_LIBRARY_SUFFIX}")
    endif()
  
@@ -35,7 +38,9 @@ index 2d9116b08a52..3a650bf53d48 100644
 -                  "-ccopt" "-Wl,-rpath,\\$CAMLORIGIN/../.."
 -                  ${ocaml_pkgs})
 +  if ( LLVM_OCAML_OUT_OF_TREE )
-+    set(ocaml_flags ${ocaml_pkgs})
++    # "-ccopt" "-L\\$CAMLORIGIN" is necessary for downstream programs to find
++    # the archive (.a) files when compiling with -custom
++    set(ocaml_flags "-ccopt" "-L\\$CAMLORIGIN" ${ocaml_pkgs})
 +  else()
 +    set(ocaml_flags "-ldopt" "-L${LLVM_LIBRARY_DIR}"
 +                    "-ccopt" "-L\\$CAMLORIGIN/../.."
@@ -94,7 +99,7 @@ index 2d9116b08a52..3a650bf53d48 100644
  
    string(REPLACE ";" " " ARG_CFLAGS "${ARG_CFLAGS}")
    set(c_flags "${ARG_CFLAGS} ${LLVM_DEFINITIONS}")
-@@ -201,9 +220,9 @@ function(add_ocaml_library name)
+@@ -201,9 +225,9 @@ function(add_ocaml_library name)
      if( NOT (ext STREQUAL ".cmo" OR
               ext STREQUAL ".ml" OR
               ext STREQUAL CMAKE_C_OUTPUT_EXTENSION OR
