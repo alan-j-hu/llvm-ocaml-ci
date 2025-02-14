@@ -29,6 +29,8 @@ jobs:
       - run: opam repo add local ./repository
       - run: opam update
       - run: opam install conf-llvm-${{ matrix.link_mode }}
+      - if: ${{ matrix.os == 'macos-latest' }}
+        run: export LDFLAGS="-L/opt/homebrew/opt/llvm@18/lib"
       - run: opam install llvm.18-${{ matrix.link_mode }}
       - run: opam install dune
       - run: opam exec -- dune build ./test.exe --verbose
