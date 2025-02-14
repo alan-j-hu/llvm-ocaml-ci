@@ -30,3 +30,7 @@ jobs:
       - run: opam update
       - run: opam install conf-llvm-${{ matrix.link_mode }}
       - run: opam install llvm.18-${{ matrix.link_mode }}
+      - run: dune build ./test.exe --verbose
+      - run: dune exec ./test.exe --verbose
+      - run: dune build ./test.bc --verbose
+      - run: dune exec ./test.bc --verbose
