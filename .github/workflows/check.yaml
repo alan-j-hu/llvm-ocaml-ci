@@ -7,7 +7,7 @@ on:
 permissions: read-all
 
 jobs:
-  build-static:
+  install-and-build:
     strategy:
       fail-fast: false
       matrix:
