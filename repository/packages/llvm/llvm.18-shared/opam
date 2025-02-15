@@ -46,6 +46,6 @@ extra-source "AddOCaml.cmake.patch" {
   src:
     "llvm/AddOCaml.cmake.patch"
   checksum: [
-    "md5=2e1dec68875a1d0aca240ac015e12336"
+    "md5=8f5216be576457a2f688f3a21c84b8d9"
   ]
 }

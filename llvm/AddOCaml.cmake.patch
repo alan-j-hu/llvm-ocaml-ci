@@ -1,5 +1,5 @@
 diff --git a/llvm/cmake/modules/AddOCaml.cmake b/llvm/cmake/modules/AddOCaml.cmake
-index 2d9116b08a52..e0eb3e1ac99c 100644
+index 2d9116b08a52..fe480f36d36b 100644
 --- a/llvm/cmake/modules/AddOCaml.cmake
 +++ b/llvm/cmake/modules/AddOCaml.cmake
 @@ -38,12 +38,23 @@ function(add_ocaml_library name)
@@ -40,7 +40,7 @@ index 2d9116b08a52..e0eb3e1ac99c 100644
 +  if ( LLVM_OCAML_OUT_OF_TREE )
 +    # "-ccopt" "-L\\$CAMLORIGIN" is necessary for downstream programs to find
 +    # the archive (.a) files when compiling with -custom
-+    set(ocaml_flags "-ldopt" "-L${LLVM_OCAML_EXTERNAL_LLVM_LIBDIR}"
++    set(ocaml_flags "-L${LLVM_OCAML_EXTERNAL_LLVM_LIBDIR}"
 +                    "-ccopt" "-L\\$CAMLORIGIN"
 +                    ${ocaml_pkgs})
 +  else()
