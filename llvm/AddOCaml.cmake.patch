@@ -1,5 +1,5 @@
 diff --git a/llvm/cmake/modules/AddOCaml.cmake b/llvm/cmake/modules/AddOCaml.cmake
-index 2d9116b08a52..fe480f36d36b 100644
+index 2d9116b08a52..2f22646f4c2b 100644
 --- a/llvm/cmake/modules/AddOCaml.cmake
 +++ b/llvm/cmake/modules/AddOCaml.cmake
 @@ -38,12 +38,23 @@ function(add_ocaml_library name)
@@ -29,7 +29,7 @@ index 2d9116b08a52..fe480f36d36b 100644
      endif()
    endif()
    if( HAVE_OCAMLOPT )
-@@ -52,39 +63,51 @@ function(add_ocaml_library name)
+@@ -52,39 +63,55 @@ function(add_ocaml_library name)
           "${bin}/${name}${CMAKE_STATIC_LIBRARY_SUFFIX}")
    endif()
  
@@ -48,6 +48,10 @@ index 2d9116b08a52..fe480f36d36b 100644
 +                    "-ccopt" "-L\\$CAMLORIGIN/../.."
 +                    "-ccopt" "-Wl,-rpath,\\$CAMLORIGIN/../.."
 +                    ${ocaml_pkgs})
++  endif()
++
++  if (LLVM_OCAML_USE_HOMEBREW)
++    list(APPEND ocaml_flags "-L$ENV{HOMEBREW_PREFIX}/lib")
 +  endif()
  
    foreach( ocaml_dep ${ARG_OCAMLDEP} )
@@ -98,7 +102,7 @@ index 2d9116b08a52..fe480f36d36b 100644
  
    string(REPLACE ";" " " ARG_CFLAGS "${ARG_CFLAGS}")
    set(c_flags "${ARG_CFLAGS} ${LLVM_DEFINITIONS}")
-@@ -201,9 +224,9 @@ function(add_ocaml_library name)
+@@ -201,9 +228,9 @@ function(add_ocaml_library name)
      if( NOT (ext STREQUAL ".cmo" OR
               ext STREQUAL ".ml" OR
               ext STREQUAL CMAKE_C_OUTPUT_EXTENSION OR

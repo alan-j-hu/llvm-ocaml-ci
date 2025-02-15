@@ -10,10 +10,26 @@ dev-repo: "git+http://llvm.org/git/llvm.git"
 doc: "http://llvm.org"
 homepage: "http://llvm.org"
 build: [
-  ["bash" "-ex" "install.sh" "%{conf-llvm-static:config}%" lib "%{conf-cmake:cmd}%" make "build" "static"]
+  ["bash" "-ex" "install.sh"
+     "--llvm-config" "%{conf-llvm-static:config}%"
+     "--libdir" lib
+     "--cmake" "%{conf-cmake:cmd}%"
+     "--make" make
+     "--link-mode" "static"
+     "--use-homebrew" {os-distribution = "homebrew"}
+     "build"
+  ]
 ]
 install: [
-  ["bash" "-ex" "install.sh" "%{conf-llvm-static:config}%" lib "%{conf-cmake:cmd}%" make "install" "static"]
+  ["bash" "-ex" "install.sh"
+     "--llvm-config" "%{conf-llvm-static:config}%"
+     "--libdir" lib
+     "--cmake" "%{conf-cmake:cmd}%"
+     "--make" make
+     "--link-mode" "static"
+     "--use-homebrew" {os-distribution = "homebrew"}
+     "install"
+  ]
 ]
 depends: [
   "ocaml" {>= "4.00.0"}
@@ -38,14 +54,13 @@ extra-source "install.sh" {
   src:
     "llvm/install.sh"
   checksum: [
-    "sha256=27bb787d5c0ed7ee6057d5867921d623adff4edb51a0bb579fdc08e3877e4c67"
-    "md5=55a61bc9bb1dcaa53aecfa4cba9429b3"
+    "md5=d95477abab7342ff68239ad9a8a3422c"
   ]
 }
 extra-source "AddOCaml.cmake.patch" {
   src:
     "llvm/AddOCaml.cmake.patch"
   checksum: [
-    "md5=8f5216be576457a2f688f3a21c84b8d9"
+    "md5=d38b84e66b7240d4406c4270d53c49b7"
   ]
 }
