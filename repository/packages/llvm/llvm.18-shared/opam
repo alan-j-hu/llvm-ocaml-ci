@@ -11,7 +11,7 @@ doc: "http://llvm.org"
 homepage: "http://llvm.org"
 build: [
   ["bash" "-ex" "install.sh"
-     "--llvm-config" "%{conf-llvm-static:config}%"
+     "--llvm-config" "%{conf-llvm-shared:config}%"
      "--libdir" lib
      "--cmake" "%{conf-cmake:cmd}%"
      "--make" make
@@ -22,7 +22,7 @@ build: [
 ]
 install: [
   ["bash" "-ex" "install.sh"
-     "--llvm-config" "%{conf-llvm-static:config}%"
+     "--llvm-config" "%{conf-llvm-shared:config}%"
      "--libdir" lib
      "--cmake" "%{conf-cmake:cmd}%"
      "--make" make
