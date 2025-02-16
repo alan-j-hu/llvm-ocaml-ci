@@ -10,25 +10,23 @@ dev-repo: "git+http://llvm.org/git/llvm.git"
 doc: "http://llvm.org"
 homepage: "http://llvm.org"
 build: [
-  ["bash" "-ex" "install.sh"
+  ["bash" "-ex" "install.sh" "build"
      "--llvm-config" "%{conf-llvm-static:config}%"
      "--libdir" lib
      "--cmake" "%{conf-cmake:cmd}%"
      "--make" make
      "--link-mode" "static"
      "--use-homebrew" {os-distribution = "homebrew"}
-     "build"
   ]
 ]
 install: [
-  ["bash" "-ex" "install.sh"
+  ["bash" "-ex" "install.sh" "install"
      "--llvm-config" "%{conf-llvm-static:config}%"
      "--libdir" lib
      "--cmake" "%{conf-cmake:cmd}%"
      "--make" make
      "--link-mode" "static"
      "--use-homebrew" {os-distribution = "homebrew"}
-     "install"
   ]
 ]
 depends: [
@@ -54,7 +52,7 @@ extra-source "install.sh" {
   src:
     "llvm/install.sh"
   checksum: [
-    "md5=d95477abab7342ff68239ad9a8a3422c"
+    "md5=a22caf1a89e9cc892148524ecf863d1d"
   ]
 }
 extra-source "AddOCaml.cmake.patch" {
