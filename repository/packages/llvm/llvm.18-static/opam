@@ -52,7 +52,7 @@ extra-source "install.sh" {
   src:
     "llvm/install.sh"
   checksum: [
-    "md5=a22caf1a89e9cc892148524ecf863d1d"
+    "md5=66ab136ac2d2cfd7b7b1908bda00cb5c"
   ]
 }
 extra-source "AddOCaml.cmake.patch" {

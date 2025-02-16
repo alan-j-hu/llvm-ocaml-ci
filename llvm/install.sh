@@ -1,6 +1,8 @@
 #!/bin/bash -ex
 
-action=""
+action="$1"
+shift
+
 llvm_config=""
 libdir=""
 cmake=""
@@ -8,64 +10,57 @@ make=""
 link_mode=""
 use_homebrew=FALSE
 
-case $1 in
-  "build")
-      action="build"
-      shift;;
-  "install")
-      action="install"
-      shift;;
-  *)
-      echo "Unknown action."
-      exit 0
-      ;;
-esac
-
 while [[ $# -gt 0 ]]; do
-    case $1 in
-      --llvm-config)
-          if [[ $# -lt 2 ]]; then
-              echo "No llvm-config specified."
-              exit 1
-          fi
-          llvm_config="$2"
-          shift 2;;
-      --libdir)
-          if [[ $# -lt 2 ]]; then
-              echo "No libdir specified."
-              exit 1
-          fi
-          libdir="$2"
-          shift 2;;
-      --cmake)
-          if [[ $# -lt 2 ]]; then
-              echo "No cmake specified."
-              exit 1
-          fi
-          cmake="$2"
-          shift 2;;
-      --make)
-          if [[ $# -lt 2 ]]; then
-              echo "No make specified."
-              exit 1
-          fi
-          make="$2"
-          shift 2;;
-      --link-mode)
-          if [[ $# -lt 2 ]]; then
-              echo "No link-mode specified."
-              exit 1
-          fi
-          link_mode="$2"
-          shift 2;;
-      --use-homebrew)
-          use_homebrew=TRUE
-          shift;;
-      *)
-          echo "Unknown option."
-          shift
-          ;;
-    esac
+  case $1 in
+  --llvm-config)
+    if [[ $# -lt 2 ]]; then
+        echo "No llvm-config specified."
+        exit 1
+    fi
+    llvm_config="$2"
+    shift 2
+    ;;
+  --libdir)
+    if [[ $# -lt 2 ]]; then
+        echo "No libdir specified."
+        exit 1
+    fi
+    libdir="$2"
+    shift 2
+    ;;
+  --cmake)
+    if [[ $# -lt 2 ]]; then
+        echo "No cmake specified."
+        exit 1
+    fi
+    cmake="$2"
+    shift 2
+    ;;
+  --make)
+    if [[ $# -lt 2 ]]; then
+        echo "No make specified."
+        exit 1
+    fi
+    make="$2"
+    shift 2
+    ;;
+  --link-mode)
+    if [[ $# -lt 2 ]]; then
+        echo "No link-mode specified."
+        exit 1
+    fi
+    link_mode="$2"
+    shift 2
+    ;;
+  --use-homebrew)
+    use_homebrew=TRUE
+    shift
+    ;;
+  *)
+    echo "Unknown option."
+    shift
+    ;;
+  esac
 done
 
 function filter_experimental_targets {
