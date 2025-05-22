@@ -1,4 +1,5 @@
 let () =
+  let _ = Llvm_executionengine.initialize () in
   let context = Llvm.global_context () in
   let module_ = Llvm.create_module context "module" in
   let f_ty = Llvm.function_type (Llvm.i32_type context) [||] in
