@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        link_mode: [static, shared]
+        version: [18-static, 18-shared, 19-static, 19-shared]
         os:
           - ubuntu-latest
           - macos-latest
@@ -28,8 +28,7 @@ jobs:
           ocaml-compiler: 5
       - run: opam repo add local ./repository
       - run: opam update
-      - run: opam install conf-llvm-${{ matrix.link_mode }}
-      - run: opam install llvm.18-${{ matrix.link_mode }}
+      - run: opam install llvm.${{ matrix.version }}
       - run: opam install dune
       - run: opam exec -- dune build ./test.exe --verbose
       - run: opam exec -- dune exec ./test.exe --verbose
