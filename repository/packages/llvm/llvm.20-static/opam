@@ -34,7 +34,7 @@ depends: [
   "ocaml" {>= "4.00.0"}
   "ctypes" {>= "0.4"}
   "ocamlfind" {build}
-  "conf-llvm-static" {build & = "21"}
+  "conf-llvm-static" {build & = "20"}
   "conf-cmake" {build}
 ]
 patches: [
