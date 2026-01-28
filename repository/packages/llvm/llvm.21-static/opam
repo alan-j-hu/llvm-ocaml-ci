@@ -39,6 +39,7 @@ depends: [
 ]
 patches: [
   "AddOCaml.cmake.patch"
+  "fix-opensuse.AddOCaml.cmake.patch" {os-family = "suse" | os-family = "opensuse"}
 ]
 synopsis: "The OCaml bindings distributed with LLVM"
 description: "Note: LLVM should be installed first."
@@ -51,17 +52,25 @@ url {
 }
 extra-source "install.sh" {
   src:
-    "llvm/install.sh"
+    "llvm/install.sh.20"
   checksum: [
-    "sha256=c1f95d0c7ae539fcbe97327c4ed64e7a86009143c34f7e721319407975965bae"
-    "md5=6e458426d1008d4696662cf7d3432d8b"
+    "sha256=bd477f109fc6316578fdc61dec0af8f92a2aa7f4cf329b3ebf8909e633c01b92"
+    "md5=3067a5aa3546840049202a019c0b29df"
   ]
 }
 extra-source "AddOCaml.cmake.patch" {
   src:
-    "llvm/AddOCaml.cmake.patch.19"
+    "llvm/AddOCaml.cmake.patch.20"
   checksum: [
-    "sha256=e7f8c13b60eeac6dc81ebd6ab9ddd8b6f6272d3351ae608881101b2aef949c8d"
-    "md5=2fad2f9e7613690301d35db8b09c784f"
+    "sha256=b5ea22d9cbcc8adbb8acfbd325615c4a21ad2e3374e351cf5af3ed7d1a261849"
+    "md5=0aa89740ac593ae0960ec7f5d933ea67"
+  ]
+}
+extra-source "fix-opensuse-AddOCaml.cmake.patch" {
+  src:
+    "llvm/fix-opensuse.AddOCaml.cmake.patch"
+  checksum: [
+    "sha256=5498f26fd172acd17190547b323b3cd4e5d5359345cfe0b01e714d9cd8619c27"
+    "md5=3bb1a439e7bee7659a343b8aeeee4e7e"
   ]
 }
