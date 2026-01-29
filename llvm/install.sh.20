@@ -69,11 +69,6 @@ function filter_experimental_targets {
 
 function llvm_build {
     ocaml_flags="-ldopt;\"$($llvm_config --ldflags)\""
-
-    if [[ $use_homebrew = TRUE ]]; then
-        ocaml_flags="$ocaml_flags;-L$(brew --prefix)/lib;-L$(brew --prefix llvm)/lib"
-    fi;
-
     mkdir "build"
     "$cmake" -Bbuild -Sllvm \
         -DCMAKE_BUILD_TYPE="$($llvm_config --build-mode)" \
