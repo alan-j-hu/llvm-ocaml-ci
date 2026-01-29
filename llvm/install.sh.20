@@ -71,7 +71,7 @@ function llvm_build {
     ocaml_flags="-ldopt;\"$($llvm_config --ldflags)\""
 
     if [[ $use_homebrew = TRUE ]]; then
-        ocaml_flags="$ocaml_flags;-L$(brew --prefix)/lib"
+        ocaml_flags="$ocaml_flags;-L$(brew --prefix)/lib;-L$(brew --prefix llvm)/lib"
     fi;
 
     mkdir "build"
@@ -81,8 +81,7 @@ function llvm_build {
         -DLLVM_OCAML_FLAGS="$ocaml_flags" \
         -DLLVM_LINK_LLVM_DYLIB=$([ $link_mode = "shared" ] && echo TRUE || echo FALSE) \
         -DLLVM_OCAML_OUT_OF_TREE=TRUE \
-        -DLLVM_OCAML_INSTALL_PATH="$libdir" \
-        -DLLVM_OCAML_USE_HOMEBREW="$use_homebrew"
+        -DLLVM_OCAML_INSTALL_PATH="$libdir"
     $make -j -Cbuild ocaml_all
 }
 
