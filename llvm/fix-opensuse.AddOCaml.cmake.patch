@@ -1,6 +1,6 @@
 --- a/llvm/cmake/modules/AddOCaml.cmake
 +++ b/llvm/cmake/modules/AddOCaml.cmake
-@@ -77,7 +77,7 @@ function(add_ocaml_library name)
+@@ -73,7 +73,7 @@ function(add_ocaml_library name)
    endforeach()
  
    if(LLVM_LINK_LLVM_DYLIB)
