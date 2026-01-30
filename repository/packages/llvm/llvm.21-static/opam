@@ -54,8 +54,8 @@ extra-source "install.sh" {
   src:
     "llvm/install.sh.20"
   checksum: [
-    "sha256=261b53a701b05b2fdb94b91993c658b375f4d59ce612ff7becda94ea19f5a22e"
-    "md5=023fdc6f2c52e77c74e57fb1be60cd6f"
+    "sha256=30a5975881122c6681c87fcc864c742975da5e0b702d09baee3f0fa9025c4bd1"
+    "md5=70a52e00c1e1c2335eca4b306d4b78ae"
   ]
 }
 extra-source "AddOCaml.cmake.patch" {
