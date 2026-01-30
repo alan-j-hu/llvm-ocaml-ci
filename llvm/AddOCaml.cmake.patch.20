@@ -1,3 +1,5 @@
+diff --git a/llvm/cmake/modules/AddOCaml.cmake b/llvm/cmake/modules/AddOCaml.cmake
+index 2d9116b08a52..6dd9422583ac 100644
 --- a/llvm/cmake/modules/AddOCaml.cmake
 +++ b/llvm/cmake/modules/AddOCaml.cmake
 @@ -38,12 +38,21 @@ function(add_ocaml_library name)
@@ -91,7 +93,7 @@
    set(c_flags "${ARG_CFLAGS} ${LLVM_DEFINITIONS}")
 +
 +  if ( LLVM_OCAML_CFLAGS )
-+    list(APPEND c_flags "${LLVM_OCAML_CFLAGS}")
++    set(c_flags "${c_flags} ${LLVM_OCAML_CFLAGS}")
 +  endif()
 +
    foreach( include_dir ${LLVM_INCLUDE_DIR} ${LLVM_MAIN_INCLUDE_DIR} )

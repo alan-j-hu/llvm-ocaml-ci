@@ -68,7 +68,7 @@ function filter_experimental_targets {
 }
 
 function llvm_build {
-    ocaml_cflags="-ldopt \"$($llvm_config --ldflags)\""
+    ocaml_cflags="$($llvm_config --ldflags)"
     mkdir "build"
     "$cmake" -Bbuild -Sllvm \
         -DCMAKE_BUILD_TYPE="$($llvm_config --build-mode)" \
