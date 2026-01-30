@@ -27,7 +27,7 @@
      endif()
    endif()
    if( HAVE_OCAMLOPT )
-@@ -52,42 +61,50 @@ function(add_ocaml_library name)
+@@ -52,42 +61,49 @@ function(add_ocaml_library name)
           "${bin}/${name}${CMAKE_STATIC_LIBRARY_SUFFIX}")
    endif()
  
@@ -91,14 +91,13 @@
    set(c_flags "${ARG_CFLAGS} ${LLVM_DEFINITIONS}")
 +
 +  if ( LLVM_OCAML_CFLAGS )
-+    string(REPLACE ";" " " LLVM_OCAML_CFLAGS "${LLVM_OCAML_CFLAGS}")
 +    list(APPEND c_flags "${LLVM_OCAML_CFLAGS}")
 +  endif()
 +
    foreach( include_dir ${LLVM_INCLUDE_DIR} ${LLVM_MAIN_INCLUDE_DIR} )
      set(c_flags "${c_flags} -I${include_dir}")
    endforeach()
-@@ -201,9 +218,9 @@ function(add_ocaml_library name)
+@@ -201,9 +217,9 @@ function(add_ocaml_library name)
      if( NOT (ext STREQUAL ".cmo" OR
               ext STREQUAL ".ml" OR
               ext STREQUAL CMAKE_C_OUTPUT_EXTENSION OR
