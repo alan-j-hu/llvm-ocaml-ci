@@ -1,3 +1,5 @@
+diff --git a/llvm/cmake/modules/AddOCaml.cmake b/llvm/cmake/modules/AddOCaml.cmake
+index 2d9116b08a52..ecdcddbd707f 100644
 --- a/llvm/cmake/modules/AddOCaml.cmake
 +++ b/llvm/cmake/modules/AddOCaml.cmake
 @@ -38,12 +38,21 @@ function(add_ocaml_library name)
@@ -27,7 +29,7 @@
      endif()
    endif()
    if( HAVE_OCAMLOPT )
-@@ -52,40 +61,46 @@ function(add_ocaml_library name)
+@@ -52,42 +61,57 @@ function(add_ocaml_library name)
           "${bin}/${name}${CMAKE_STATIC_LIBRARY_SUFFIX}")
    endif()
  
@@ -41,8 +43,16 @@
 +    set(ocaml_flags "-ldopt" "-L${LLVM_LIBRARY_DIR}" ${ocaml_pkgs})
 +  endif()
 +
-+  if ( LLVM_OCAML_FLAGS )
-+    list(APPEND ocaml_flags "${LLVM_OCAML_FLAGS}")
++  if(LLVM_OCAML_LDFLAGS)
++    string(REPLACE " " ";" LLVM_OCAML_LDFLAGS "${LLVM_OCAML_LDFLAGS}")
++    foreach( ldflag ${LLVM_OCAML_LDFLAGS} )
++      # Match -llib and -Ldir flags
++      if(ldflag MATCHES "^(-L.+|-l.+)")
++        list(APPEND ocaml_flags ${ldflag})
++      else()
++        list(APPEND ocaml_flags "-ldopt" ${ldflag})
++      endif()
++    endforeach()
 +  endif()
  
    foreach( ocaml_dep ${ARG_OCAMLDEP} )
@@ -93,8 +103,11 @@
 +
    string(REPLACE ";" " " ARG_CFLAGS "${ARG_CFLAGS}")
    set(c_flags "${ARG_CFLAGS} ${LLVM_DEFINITIONS}")
++
    foreach( include_dir ${LLVM_INCLUDE_DIR} ${LLVM_MAIN_INCLUDE_DIR} )
-@@ -201,9 +216,9 @@ function(add_ocaml_library name)
+     set(c_flags "${c_flags} -I${include_dir}")
+   endforeach()
+@@ -201,9 +225,9 @@ function(add_ocaml_library name)
      if( NOT (ext STREQUAL ".cmo" OR
               ext STREQUAL ".ml" OR
               ext STREQUAL CMAKE_C_OUTPUT_EXTENSION OR

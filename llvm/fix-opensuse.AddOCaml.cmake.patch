@@ -1,6 +1,8 @@
+diff --git a/llvm/cmake/modules/AddOCaml.cmake b/llvm/cmake/modules/AddOCaml.cmake
+index ecdcddbd707f..fc47522888f2 100644
 --- a/llvm/cmake/modules/AddOCaml.cmake
 +++ b/llvm/cmake/modules/AddOCaml.cmake
-@@ -77,7 +77,7 @@ function(add_ocaml_library name)
+@@ -85,7 +85,7 @@ function(add_ocaml_library name)
    endforeach()
  
    if(LLVM_LINK_LLVM_DYLIB)

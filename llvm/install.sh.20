@@ -73,7 +73,7 @@ function llvm_build {
     "$cmake" -Bbuild -Sllvm \
         -DCMAKE_BUILD_TYPE="$($llvm_config --build-mode)" \
         -DLLVM_TARGETS_TO_BUILD="$($llvm_config --targets-built | filter_experimental_targets | sed 's/ /;/g')" \
-        -DLLVM_OCAML_FLAGS="$ocaml_flags" \
+        -DLLVM_OCAML_LDFLAGS="$ocaml_flags" \
         -DLLVM_LINK_LLVM_DYLIB=$([ $link_mode = "shared" ] && echo TRUE || echo FALSE) \
         -DLLVM_OCAML_OUT_OF_TREE=TRUE \
         -DLLVM_OCAML_INSTALL_PATH="$libdir"
