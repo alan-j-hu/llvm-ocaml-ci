@@ -69,7 +69,7 @@ function filter_experimental_targets {
 
 function llvm_build {
     ocaml_flags="$($llvm_config --ldflags)"
-    if [[ use_homebrew = "true" ]]; then
+    if [[ $use_homebrew = "true" ]]; then
         ocaml_flags="$ocaml_flags -L$(brew --prefix)/lib"
     fi
 
