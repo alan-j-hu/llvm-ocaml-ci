@@ -79,10 +79,9 @@ function llvm_build {
         -DLLVM_TARGETS_TO_BUILD="$($llvm_config --targets-built | filter_experimental_targets | sed 's/ /;/g')" \
         -DLLVM_OCAML_LDFLAGS="$ocaml_flags" \
         -DLLVM_LINK_LLVM_DYLIB=$([ $link_mode = "shared" ] && echo TRUE || echo FALSE) \
-        -DLLVM_OCAML_BUILD_CUSTOM=TRUE \
         -DLLVM_OCAML_OUT_OF_TREE=TRUE \
         -DLLVM_OCAML_INSTALL_PATH="$libdir"
-    $make VERBOSE=1 -j -Cbuild ocaml_all
+    $make -j -Cbuild ocaml_all
 }
 
 function llvm_install {
