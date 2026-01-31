@@ -1,5 +1,5 @@
 (executable
  (name test)
  (modules test)
- (modes (native exe) byte_complete)
+ (modes byte_complete native)
  (libraries llvm llvm.executionengine))
