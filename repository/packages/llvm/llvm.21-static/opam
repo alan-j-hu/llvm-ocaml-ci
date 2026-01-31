@@ -54,23 +54,23 @@ extra-source "install.sh" {
   src:
     "llvm/install.sh.20"
   checksum: [
-    "sha256=e54d3a22746ef49395891cef56b4680f9996d31c9712bc5cdcb87e15005cd5b9"
-    "md5=617a2d19f033b60715c2614f2576c28b"
+    "sha256=2e7af22e4b7a66e1595fd7ca299b7dd24446344f8a054c522c81fd7b6cec7a4b"
+    "md5=16f6567f22a0a703fe92060c3ea59f23"
   ]
 }
 extra-source "AddOCaml.cmake.patch" {
   src:
     "llvm/AddOCaml.cmake.patch.20"
   checksum: [
-    "sha256=a4aa4160c411d246e62ee6b50f2df0382293dadcc7b4fe25e4e9402e5cf420e2"
-    "md5=0262193d73ad33c6854634e0fdccad66"
+    "sha256=830c65b532d52519efcb35969c2c4e0995917ea38c9538aaf9edf62d0533f504"
+    "md5=d86deb10aa0d6cfef3853992227eea30"
   ]
 }
 extra-source "fix-opensuse-AddOCaml.cmake.patch" {
   src:
     "llvm/fix-opensuse.AddOCaml.cmake.patch"
   checksum: [
-    "sha256=2bd1324d01e5728349edc9ec6a8db9654059e6f975d37c1e7ef74387906952ea"
-    "md5=0f658c2fe4eb6aed88a90f44cd1db844"
+    "sha256=f678e23c62ee22e6741555c1d945a61aa4060c29e53dc15cfd239fd231f55687"
+    "md5=59b7821d06316876c49e3ecac40e8e15"
   ]
 }

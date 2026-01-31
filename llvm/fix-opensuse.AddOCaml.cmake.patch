@@ -1,9 +1,9 @@
 diff --git a/llvm/cmake/modules/AddOCaml.cmake b/llvm/cmake/modules/AddOCaml.cmake
-index ecdcddbd707f..fc47522888f2 100644
+index 2465b7ef7377..0cb049b38c11 100644
 --- a/llvm/cmake/modules/AddOCaml.cmake
 +++ b/llvm/cmake/modules/AddOCaml.cmake
-@@ -85,7 +85,7 @@ function(add_ocaml_library name)
-   endforeach()
+@@ -79,7 +79,7 @@ function(add_ocaml_library name)
+   endif()
  
    if(LLVM_LINK_LLVM_DYLIB)
 -    list(APPEND ocaml_flags "-lLLVM-${LLVM_VERSION_MAJOR}")
